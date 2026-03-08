@@ -19,18 +19,14 @@ jobs:
           aws-region: eu-west-2
 
       - name: Login to Amazon ECR
-        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Build and Push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v3
         with:
           context: ./frontend
-          file: ./frontend/Dockerfile
+          path: ./frontend/Dockerfile
           push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}/dev/frontend:${{ github.run_number }}
+          tags: 283104167597.dkr.ecr.eu-west-2.amazonaws.com/dev/frontend:${{ github.run_number }}
           build-args: |
             REACT_APP_API_BASE_URL=${{ secrets.API_BASE_URL }}
