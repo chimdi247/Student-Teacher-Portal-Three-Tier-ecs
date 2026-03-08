@@ -10,14 +10,9 @@ jobs:
     permissions:
       contents: read
 
-    defaults:
-      run:
-        shell: bash
-        working-directory: frontend
-
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v5
@@ -30,10 +25,10 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build and Push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
-          context: frontend
-          path: frontend/Dockerfile
+          context: ./frontend
+          file: ./frontend/Dockerfile
           push: true
           tags: 283104167597.dkr.ecr.eu-west-2.amazonaws.com/dev/frontend:${{ github.run_number }}
           build-args: |
