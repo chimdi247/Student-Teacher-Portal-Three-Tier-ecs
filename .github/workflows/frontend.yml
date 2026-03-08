@@ -27,6 +27,7 @@ jobs:
           context: ./frontend
           path: ./frontend/Dockerfile
           push: true
+          provenance: false
           tags: 283104167597.dkr.ecr.eu-west-2.amazonaws.com/dev/frontend:${{ github.run_number }}
           build-args: |
             REACT_APP_API_BASE_URL=${{ secrets.API_BASE_URL }}
