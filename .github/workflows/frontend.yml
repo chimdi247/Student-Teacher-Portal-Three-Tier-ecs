@@ -18,7 +18,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
 
-      - name: Login to ECR
+      - name: Login to Amazon ECR
+        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Setup Docker Buildx
@@ -30,6 +31,6 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
-          tags: 283104167597.dkr.ecr.eu-west-2.amazonaws.com/dev/frontend:${{ github.run_number }}
+          tags: ${{ steps.login-ecr.outputs.registry }}/dev/frontend:${{ github.run_number }}
           build-args: |
             REACT_APP_API_BASE_URL=${{ secrets.API_BASE_URL }}
